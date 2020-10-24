@@ -113,3 +113,12 @@ svg {
   margin: 2rem 0rem;
   background: none;
 }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 1rem 0rem;
+  width: 100%;
+  position: relative;
+  border-radius: 1rem;
+  cursor: pointer;
+}
