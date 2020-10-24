@@ -41,6 +41,12 @@ closeAdjustBtn.forEach((button, index) => {
 
 generateBtn.addEventListener("click", randomColorGenerate);
 
+lockBtn.forEach((button, index) => {
+  button.addEventListener("click", (event) => {
+    lockCurrentColor(event, index);
+  });
+});
+
 //Functions
 //Generate hex code
 function generateHex() {
@@ -52,7 +58,7 @@ function generateHex() {
   let hash = "#";
 
   for (let i = 0; i < 6; i++) {
-    hash += hexString[Math.floor(Math.random() * 16)];
+    hash += hexString[Math.floor(Math.random() * 16)]; 
   }
 
   return hash; */
@@ -64,8 +70,14 @@ function randomColorGenerate() {
   colorDivs.forEach((div, index) => {
     const hexText = div.children[0];
     const randomColor = generateHex();
+
     //Adding initial colors to array
-    initialColors.push(chroma(randomColor).hex());
+    if (div.classList.contains("locked")) {
+      initialColors.push(hexText.innerText);
+      return;
+    } else {
+      initialColors.push(chroma(randomColor).hex());
+    }
     //Setting color to the div background
     div.style.backgroundColor = randomColor;
     hexText.innerText = randomColor;
@@ -215,6 +227,18 @@ function openAdjustments(index) {
 
 function closeAdjustments(index) {
   sliderContainers[index].classList.remove("active");
+}
+
+function lockCurrentColor(event, index) {
+  const lockIcon = event.target.children[0];
+  const activeColor = colorDivs[index];
+  activeColor.classList.toggle("locked");
+
+  if (lockIcon.classList.contains("fa-lock-open")) {
+    event.target.innerHTML = '<i class="fas fa-lock"></i>';
+  } else {
+    event.target.innerHTML = '<i class="fas fa-lock-open"></i>';
+  }
 }
 
 randomColorGenerate();
