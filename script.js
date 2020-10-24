@@ -4,6 +4,10 @@ const generateBtn = document.querySelector(".generate");
 const sliders = document.querySelectorAll("input[type=range]");
 const currentHeaders = document.querySelectorAll(".color h2");
 const copyContainer = document.querySelector(".copy-container");
+const lockBtn = document.querySelectorAll(".lock");
+const adjustBtn = document.querySelectorAll(".adjust");
+const closeAdjustBtn = document.querySelectorAll(".close-adjustment");
+const sliderContainers = document.querySelectorAll(".sliders");
 let initialColors;
 
 //Event listeners
@@ -23,12 +27,27 @@ currentHeaders.forEach((hex) => {
   });
 });
 
+adjustBtn.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    openAdjustments(index);
+  });
+});
+
+closeAdjustBtn.forEach((button, index) => {
+  button.addEventListener("click", () => {
+    closeAdjustments(index);
+  });
+});
+
+generateBtn.addEventListener("click", randomColorGenerate);
+
 //Functions
 //Generate hex code
 function generateHex() {
   //Using chroma js
   const hexColor = chroma.random();
   return hexColor;
+  //Using vanilla JS
   /* const hexString = "0123456789ABCDEF";
   let hash = "#";
 
@@ -63,6 +82,11 @@ function randomColorGenerate() {
   });
   //Reset inputs
   resetInputs();
+  //Check for button contrast
+  adjustBtn.forEach((button, index) => {
+    checkTextContrast(initialColors[index], button);
+    checkTextContrast(initialColors[index], lockBtn[index]);
+  });
 }
 
 //Checking for color contrast
@@ -182,7 +206,15 @@ function copyToClipboard(hex) {
   setTimeout(() => {
     copyContainer.classList.remove("active");
     copyPopup.classList.remove("active");
-  }, 1000);
+  }, 500);
+}
+
+function openAdjustments(index) {
+  sliderContainers[index].classList.toggle("active");
+}
+
+function closeAdjustments(index) {
+  sliderContainers[index].classList.remove("active");
 }
 
 randomColorGenerate();
