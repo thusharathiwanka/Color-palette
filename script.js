@@ -271,32 +271,36 @@ function savePalette(e) {
   saveContainer.classList.remove("active");
   savePopup.classList.remove("active");
   const name = saveInput.value;
-  const colors = [];
-
-  currentHeaders.forEach((header) => {
-    colors.push(header.innerText);
-  });
-  //Generate object
-  let paletteNumber = savedPalettes.length;
-  const paletteObject = {
-    name: name,
-    colors: colors,
-    paletteNumber: paletteNumber,
-  };
-  savedPalettes.push(paletteObject);
-  //Save to local storage
-  saveToLocalStorage(paletteObject);
-  saveInput.value = "";
-}
-
-function saveToLocalStorage(paletteObject) {
-  let localPalette;
-  if (localStorage.getItem("palettes") === null) {
-    localPalettes = [];
+  if (name.length == 0) {
+    console.log("Empty");
   } else {
-    localPalettes = JSON.parse(localStorage.getItem("palettes"));
+    const colors = [];
+
+    currentHeaders.forEach((header) => {
+      colors.push(header.innerText);
+    });
+    //Generate object
+    let paletteNumber = savedPalettes.length;
+    const paletteObject = {
+      name: name,
+      colors: colors,
+      paletteNumber: paletteNumber,
+    };
+    savedPalettes.push(paletteObject);
+    //Save to local storage
+    saveToLocalStorage(paletteObject);
+    saveInput.value = "";
   }
 
-  localPalettes.push(paletteObject);
-  localStorage.setItem("palettes", JSON.stringify(localPalettes));
+  function saveToLocalStorage(paletteObject) {
+    let localPalette;
+    if (localStorage.getItem("palettes") === null) {
+      localPalettes = [];
+    } else {
+      localPalettes = JSON.parse(localStorage.getItem("palettes"));
+    }
+
+    localPalettes.push(paletteObject);
+    localStorage.setItem("palettes", JSON.stringify(localPalettes));
+  }
 }
