@@ -365,3 +365,57 @@ function saveToLocalStorage(paletteObject) {
   localPalettes.push(paletteObject);
   localStorage.setItem("palettes", JSON.stringify(localPalettes));
 }
+
+function getFromLocalStorage() {
+  if (localStorage.getItem("palettes") === null) {
+    localPalettes = [];
+  } else {
+    const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
+
+    paletteObjects.forEach((paletteObject) => {
+      //Generate the palette to library
+      const palette = document.createElement("div");
+      palette.classList.add("custom-palette");
+      const title = document.createElement("h4");
+      title.innerText = paletteObject.name;
+      const preview = document.createElement("div");
+      preview.classList.add("small-preview");
+      paletteObject.colors.forEach((smallColor) => {
+        const smallDiv = document.createElement("div");
+        smallDiv.style.backgroundColor = smallColor;
+        preview.appendChild(smallDiv);
+      });
+
+      const paletteBtn = document.createElement("button");
+      paletteBtn.classList.add("pick-palette");
+      paletteBtn.classList.add(paletteObject.paletteNumber);
+      paletteBtn.innerText = "Select";
+
+      //Add event listener to palette button
+      paletteBtn.addEventListener("click", (event) => {
+        libraryContainer.classList.remove("active");
+        libraryPopup.classList.remove("active");
+
+        const paletteIndex = event.target.classList[1];
+        initialColors = [];
+        savedPalettes[paletteIndex].colors.forEach((color, index) => {
+          initialColors.push(color);
+          colorDivs[index].style.backgroundColor = color;
+          const text = colorDivs[index].children[0];
+
+          checkTextContrast(color, text);
+          updateTextUI(index);
+        });
+        resetInputs();
+      });
+
+      //Append to library
+      palette.appendChild(title);
+      palette.appendChild(preview);
+      palette.appendChild(paletteBtn);
+      libraryContainer.children[0].appendChild(palette);
+    });
+  }
+}
+
+getFromLocalStorage();
