@@ -3,15 +3,23 @@ const colorDivs = document.querySelectorAll(".color");
 const generateBtn = document.querySelector(".generate");
 const sliders = document.querySelectorAll("input[type=range]");
 const currentHeaders = document.querySelectorAll(".color h2");
+const copyContainer = document.querySelector(".copy-container");
 let initialColors;
 
 //Event listeners
 sliders.forEach((slider) => {
   slider.addEventListener("input", hslControls);
 });
+
 colorDivs.forEach((div, index) => {
   div.addEventListener("change", () => {
     updateTextUI(index);
+  });
+});
+
+currentHeaders.forEach((hex) => {
+  hex.addEventListener("click", () => {
+    copyToClipboard(hex);
   });
 });
 
@@ -126,6 +134,7 @@ function updateTextUI(index) {
   //Check contrast
   checkTextContrast(color, CurrentText);
 
+  //Changing control icon colors
   for (icon of icons) {
     checkTextContrast(color, icon);
   }
@@ -152,6 +161,28 @@ function resetInputs() {
       slider.value = Math.floor(saturationValue * 100) / 100;
     }
   });
+}
+
+//Copying to clipboard
+function copyToClipboard(hex) {
+  //Adding text area and getting the value
+  const textArea = document.createElement("textarea");
+  textArea.value = hex.innerText;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textArea);
+
+  //Add popup
+  const copyPopup = copyContainer.children[0];
+  copyContainer.classList.add("active");
+  copyPopup.classList.add("active");
+
+  //Removing popup
+  setTimeout(() => {
+    copyContainer.classList.remove("active");
+    copyPopup.classList.remove("active");
+  }, 1000);
 }
 
 randomColorGenerate();
