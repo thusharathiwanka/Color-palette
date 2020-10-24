@@ -328,6 +328,20 @@ function savePalette() {
     paletteBtn.classList.add(paletteObject.paletteNumber);
     paletteBtn.innerText = "Select";
 
+    //Add event listener to palette button
+    paletteBtn.addEventListener("click", (event) => {
+      libraryContainer.classList.remove("active");
+      libraryPopup.classList.remove("active");
+
+      const paletteIndex = event.target.classList[1];
+      initialColors = [];
+      savedPalettes[paletteIndex].colors.forEach((color, index) => {
+        initialColors.push[color];
+        colorDivs[index].style.backgroundColor = color;
+        const text = colorDivs[index].children[0];
+      });
+    });
+
     //Append to library
     palette.appendChild(title);
     palette.appendChild(preview);
