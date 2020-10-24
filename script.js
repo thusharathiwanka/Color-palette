@@ -181,16 +181,16 @@ function resetInputs() {
   const sliders = document.querySelectorAll(".sliders input");
 
   sliders.forEach((slider) => {
-    if (slider.name == "hue") {
+    if (slider.name === "hue") {
       const hueColor = initialColors[slider.getAttribute("data-hue")];
       const hueValue = chroma(hueColor).hsl()[0];
       slider.value = Math.floor(hueValue);
-    } else if (slider.name == "brightness") {
+    } else if (slider.name === "brightness") {
       const brightnessColor =
         initialColors[slider.getAttribute("data-brightness")];
       const brightnessValue = chroma(brightnessColor).hsl()[2];
       slider.value = Math.floor(brightnessValue * 100) / 100;
-    } else if (slider.name == "saturation") {
+    } else if (slider.name === "saturation") {
       const saturationColor =
         initialColors[slider.getAttribute("data-saturation")];
       const saturationValue = chroma(saturationColor).hsl()[1];
@@ -336,10 +336,14 @@ function savePalette() {
       const paletteIndex = event.target.classList[1];
       initialColors = [];
       savedPalettes[paletteIndex].colors.forEach((color, index) => {
-        initialColors.push[color];
+        initialColors.push(color);
         colorDivs[index].style.backgroundColor = color;
         const text = colorDivs[index].children[0];
+
+        checkTextContrast(color, text);
+        updateTextUI(index);
       });
+      resetInputs();
     });
 
     //Append to library
