@@ -21,9 +21,9 @@ colorDivs.forEach((div, index) => {
   });
 });
 
-currentHeaders.forEach((hex) => {
-  hex.addEventListener("click", () => {
-    copyToClipboard(hex);
+currentHeaders.forEach((header) => {
+  header.addEventListener("click", () => {
+    copyToClipboard(header);
   });
 });
 
@@ -200,10 +200,10 @@ function resetInputs() {
 }
 
 //Copying to clipboard
-function copyToClipboard(hex) {
+function copyToClipboard(header) {
   //Adding text area and getting the value
   const textArea = document.createElement("textarea");
-  textArea.value = hex.innerText;
+  textArea.value = header.innerText;
   document.body.appendChild(textArea);
   textArea.select();
   document.execCommand("copy");
@@ -218,7 +218,7 @@ function copyToClipboard(hex) {
   setTimeout(() => {
     copyContainer.classList.remove("active");
     copyPopup.classList.remove("active");
-  }, 500);
+  }, 800);
 }
 
 function openAdjustments(index) {
@@ -242,3 +242,61 @@ function lockCurrentColor(event, index) {
 }
 
 randomColorGenerate();
+
+//Local storage
+let savedPalettes = [];
+const saveBtn = document.querySelector(".save");
+const submitSave = document.querySelector(".submit-save");
+const closeSave = document.querySelector(".close-save");
+const saveContainer = document.querySelector(".save-container");
+const saveInput = document.querySelector(".save-container input");
+const savePopup = saveContainer.children[0];
+
+//Event listeners
+saveBtn.addEventListener("click", () => {
+  saveContainer.classList.add("active");
+  savePopup.classList.add("active");
+  saveInput.focus();
+});
+
+closeSave.addEventListener("click", () => {
+  saveContainer.classList.remove("active");
+  savePopup.classList.remove("active");
+});
+
+submitSave.addEventListener("click", savePalette);
+
+//Functions
+function savePalette(e) {
+  saveContainer.classList.remove("active");
+  savePopup.classList.remove("active");
+  const name = saveInput.value;
+  const colors = [];
+
+  currentHeaders.forEach((header) => {
+    colors.push(header.innerText);
+  });
+  //Generate object
+  let paletteNumber = savedPalettes.length;
+  const paletteObject = {
+    name: name,
+    colors: colors,
+    paletteNumber: paletteNumber,
+  };
+  savedPalettes.push(paletteObject);
+  //Save to local storage
+  saveToLocalStorage(paletteObject);
+  saveInput.value = "";
+}
+
+function saveToLocalStorage(paletteObject) {
+  let localPalette;
+  if (localStorage.getItem("palettes") === null) {
+    localPalettes = [];
+  } else {
+    localPalettes = JSON.parse(localStorage.getItem("palettes"));
+  }
+
+  localPalettes.push(paletteObject);
+  localStorage.setItem("palettes", JSON.stringify(localPalettes));
+}

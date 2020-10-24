@@ -63,7 +63,8 @@ svg {
   pointer-events: all;
 }
 
-.sliders button {
+.sliders button,
+.close-save {
   position: absolute;
   top: 0%;
   right: 0%;
@@ -71,6 +72,10 @@ svg {
   cursor: pointer;
   padding: 0.6rem 0.8rem;
   background: none;
+}
+
+.close-save {
+  font-size: 1.2rem;
 }
 
 .controllers {
@@ -85,7 +90,8 @@ svg {
   height: 20vh;
 }
 
-.panel button {
+.panel button,
+.submit-save {
   font-size: 1.2rem;
   margin: 1rem;
   padding: 1rem 2rem;
@@ -93,6 +99,12 @@ svg {
   cursor: pointer;
   color: white;
   background: rgb(31, 33, 63);
+  border-radius: 0.4rem;
+}
+
+.submit-save {
+  padding: 0.5rem 2rem;
+  margin-top: 2rem;
 }
 
 .panel p {
@@ -126,7 +138,9 @@ input[type="range"] {
   cursor: pointer;
 }
 
-.copy-container {
+.copy-container,
+.save-container,
+.library-container {
   position: fixed;
   top: 0%;
   left: 0%;
@@ -141,33 +155,53 @@ input[type="range"] {
   transition: all 0.5s ease-in-out;
 }
 
-.copy-container.active {
+.copy-container.active,
+.save-container.active,
+.library-container.active {
   pointer-events: all;
   opacity: 1;
 }
 
-.copy-popup {
+.save-container input {
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 0.3rem 0.5rem;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgb(31, 33, 63);
+}
+
+.copy-popup,
+.save-popup,
+.library-popup {
   background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: transform 0.5s ease;
+  transition: all 0.5s ease;
   transform: translateY(-2rem);
   min-width: 30%;
   min-height: 30vh;
   border-radius: 1rem;
 }
 
-.copy-popup.active {
+.copy-popup.active,
+.save-popup.active,
+.library-popup.active {
   transform: translateY(0rem);
 }
 
-.copy-popup h3 {
+.copy-popup h3,
+.save-popup h3,
+.library-popup h3 {
   font-size: 1.8rem;
   padding: 1rem;
 }
 
-.copy-popup h4 {
+.copy-popup h4,
+.save-popup h4,
+.library-popup h4 {
   font-size: 1.5rem;
 }
