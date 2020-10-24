@@ -306,7 +306,7 @@ function savePalette() {
     } else {
       paletteNumber = savedPalettes.length;
     }
-    savedPalettes = [...paletteObjects];
+
     const paletteObject = {
       name: name,
       colors: colors,
@@ -380,6 +380,7 @@ function getFromLocalStorage() {
   } else {
     const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
 
+    savedPalettes = [...paletteObjects];
     paletteObjects.forEach((paletteObject) => {
       //Generate the palette to library
       const palette = document.createElement("div");
