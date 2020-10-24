@@ -298,7 +298,15 @@ function savePalette() {
       colors.push(header.innerText);
     });
     //Generate object
-    let paletteNumber = savedPalettes.length;
+    let paletteNumber;
+    const isPaletteExists = JSON.parse(localStorage.getItem("palettes"));
+
+    if (isPaletteExists) {
+      paletteNumber = paletteObject.length;
+    } else {
+      paletteNumber = savedPalettes.length;
+    }
+    savedPalettes = [...paletteObjects];
     const paletteObject = {
       name: name,
       colors: colors,
@@ -398,7 +406,7 @@ function getFromLocalStorage() {
 
         const paletteIndex = event.target.classList[1];
         initialColors = [];
-        savedPalettes[paletteIndex].colors.forEach((color, index) => {
+        paletteObjects[paletteIndex].colors.forEach((color, index) => {
           initialColors.push(color);
           colorDivs[index].style.backgroundColor = color;
           const text = colorDivs[index].children[0];
