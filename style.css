@@ -64,7 +64,8 @@ svg {
 }
 
 .sliders button,
-.close-save {
+.close-save,
+.close-library {
   position: absolute;
   top: 0%;
   right: 0%;
@@ -74,8 +75,10 @@ svg {
   background: none;
 }
 
-.close-save {
+.close-save,
+.close-library {
   font-size: 1.2rem;
+  padding-top: 0.5rem;
 }
 
 .controllers {
@@ -91,7 +94,8 @@ svg {
 }
 
 .panel button,
-.submit-save {
+.submit-save,
+.pick-palette {
   font-size: 1.2rem;
   margin: 1rem;
   padding: 1rem 2rem;
@@ -105,6 +109,10 @@ svg {
 .submit-save {
   padding: 0.5rem 2rem;
   margin-top: 2rem;
+}
+
+.pick-palette {
+  padding: 0.5rem 2rem;
 }
 
 .panel p {
@@ -204,4 +212,78 @@ input[type="range"] {
 .save-popup h4,
 .library-popup h4 {
   font-size: 1.5rem;
+}
+
+.save-popup p {
+  color: #da3949;
+  position: absolute;
+  top: 8%;
+  font-weight: 600;
+}
+
+.library-popup {
+  padding: 1rem;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  max-height: 50vh;
+  width: 40%;
+}
+
+.custom-palette {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 2rem;
+}
+
+.small-preview {
+  display: flex;
+  flex: 1;
+}
+
+.custom-palette h4 {
+  flex: 1;
+}
+
+.small-preview div {
+  height: 3rem;
+  width: 3rem;
+  flex: 1;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
 }
