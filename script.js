@@ -53,6 +53,8 @@ function randomColorGenerate() {
 
     colorizeSlider(color, hue, brightness, saturation);
   });
+  //Reset inputs
+  resetInputs();
 }
 
 //Checking for color contrast
@@ -109,6 +111,8 @@ function hslControls(e) {
     .set("hsl.h", hue.value);
 
   colorDivs[index].style.backgroundColor = color;
+  //Colorize sliders
+  colorizeSlider(color, hue, brightness, saturation);
 }
 
 //Updating text ui
@@ -125,6 +129,29 @@ function updateTextUI(index) {
   for (icon of icons) {
     checkTextContrast(color, icon);
   }
+}
+
+//Resetting range slider according to color
+function resetInputs() {
+  const sliders = document.querySelectorAll(".sliders input");
+
+  sliders.forEach((slider) => {
+    if (slider.name == "hue") {
+      const hueColor = initialColors[slider.getAttribute("data-hue")];
+      const hueValue = chroma(hueColor).hsl()[0];
+      slider.value = Math.floor(hueValue);
+    } else if (slider.name == "brightness") {
+      const brightnessColor =
+        initialColors[slider.getAttribute("data-brightness")];
+      const brightnessValue = chroma(brightnessColor).hsl()[2];
+      slider.value = Math.floor(brightnessValue * 100) / 100;
+    } else if (slider.name == "saturation") {
+      const saturationColor =
+        initialColors[slider.getAttribute("data-saturation")];
+      const saturationValue = chroma(saturationColor).hsl()[1];
+      slider.value = Math.floor(saturationValue * 100) / 100;
+    }
+  });
 }
 
 randomColorGenerate();
